@@ -2,6 +2,7 @@ import { Physics, Scene } from "phaser";
 import { CONFIG } from "../config";
 import Player from "../entities/Player";
 import Touch from "../entities/Touch";
+import Vaca from "../entities/Vaca";
 
 export default class Lab extends Scene {
 
@@ -13,31 +14,27 @@ export default class Lab extends Scene {
     /**@type {Player} */
     player;
 
+
+    /**@type {Vaca} */
+    vaca;
+    
+    
+
     touch;
 
     /**@type {Phaser.Physics.Arcade.Group} */
     groupObjects;
 
-    /**@type {Phaser.Physics.Arcade.Sprite} */
-    lixoLaranja;
-
-    /**@type {Phaser.Physics.Arcade.Sprite} */
-    lixoAzul;
-
-    /**@type {Phaser.Physics.Arcade.Sprite} */
-    lixeira;
 
     /**@type {Phaser.GameObjects.Text} */
     text;
 
-    /**@type {Phaser.GameObjects.Text} */
-    quadro;
 
     /**@type {Phaser} */
 
 
     isTouching = false;
-
+    isTouchingVaca = false;
     constructor() {
         super('Fazenda');
     }
@@ -58,6 +55,13 @@ export default class Lab extends Scene {
 
 
 
+        this.load.spritesheet('vaca', 'mapas/tiles/vacas_anim.png', {
+            frameWidth: CONFIG.TILE_SIZE*2,
+            frameHeight: CONFIG.TILE_SIZE*2
+        })
+
+
+
 
 
     }
@@ -66,7 +70,8 @@ export default class Lab extends Scene {
         this.createMap();
         this.createLayers();
         this.createPlayer();
-        // this.createLixeiras();
+        this.createVaca();
+        
         // this.createObjects();
         this.createColliders();
         this.createCamera();
@@ -86,11 +91,24 @@ export default class Lab extends Scene {
         this.quadro.setDepth(this.player.depth - 1);
         console.log(this.quadro.depth, this.player.depth);
 
+        this.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
+
     }
 
     update() {
+        console.log("update");
 
+        if(this.vaca.body.velocity.x === 0){
+            this.vaca.setFlipX(!this.vaca.flipX);
+            this.vaca.setVelocityX(this.vaca.flipX ? -40 : 40);
+        }
 
+        if (this.vaca.body.touching.up || this.vaca.body.touching.down || this.vaca.body.touching.left || this.vaca.body.touching.right){
+            console.log("aa");
+            this.vaca.setFlipX(!this.flip);
+            this.vaca.setVelocity(this.vaca.body.velocity*-1);
+        }
+        
     }
 
 
@@ -98,11 +116,31 @@ export default class Lab extends Scene {
         this.touch = new Touch(this, 16 * 8, 16 * 5);
 
         this.player = new Player(this, 16 * 8, 16 * 5, this.touch);
-        this.player.setDepth(this.layers.length+1);
+        this.player.setDepth(4);
 
 
 
     }
+
+    createVaca(){
+        this.vaca = new Vaca(this,17*16, 4*16);
+        this.vaca.setDepth(4);
+        this.physics.add.collider(this.vaca, this.layers);
+        this.vaca.body.checkCollision.up = true;
+        this.vaca.body.checkCollision.left = true;
+        this.vaca.body.checkCollision.right = true;
+        this.vaca.body.checkCollision.down = true;
+
+        // this.add.sprite(CONFIG.TILE_SIZE*16, 4*CONFIG.TILE_SIZE, 'vaca', 'vaca').setOrigin(0, 1).setDepth(this.layers.length + 1).setFrame(0);
+    }
+
+    createVaca2(){
+        this.vaca = new Vaca(this,20*16, 4*16);
+        this.vaca.setDepth(4);
+        // this.add.sprite(CONFIG.TILE_SIZE*16, 4*CONFIG.TILE_SIZE, 'vaca', 'vaca').setOrigin(0, 1).setDepth(this.layers.length + 1).setFrame(0);
+    }
+
+
 
     createMap() {
         this.map = this.make.tilemap({
@@ -225,14 +263,29 @@ export default class Lab extends Scene {
 
             if (name.endsWith('Collision')) {
                 this.physics.add.collider(this.player, this.layers[name]);
+                this.physics.add.collider(this.vaca, this.layers[name]);
+ 
             }
 
         }
         //criando a colisao entre a "maozinha" do player (touch) e os objetos da camada de objetos
 
         //chama a funcao this.handleTouch toda vez que o this.touch entrar em contato com um objeto do this.groupObjects
-        this.physics.add.overlap(this.touch, this.groupObjects, this.handleTouch, undefined, this);
+        // this.physics.add.overlap(this.touch, this.groupObjects, this.handleVaca, undefined, this);
     }
+
+
+   
+    // handleVaca() {
+        
+    //     if (this.vaca.body.touching.up || this.vaca.body.touching.down || this.vaca.body.touching.left || this.vaca.body.touching.right){
+    //         this.vaca.setFlipX(true);
+    //         this.vaca.setVelocity(this.vaca.body.velocity *-1);
+    //     }
+            
+    //     }
+    
+
 
 
     handleTouch(touch, object) {
@@ -416,12 +469,5 @@ export default class Lab extends Scene {
         }
     }
 
-
-
-
-    createLixeiras() {
-        this.lixoLaranja = this.add.sprite(CONFIG.TILE_SIZE*16, 4 * CONFIG.TILE_SIZE, 'lixeira', 'lixeiraLaranja').setOrigin(0, 1).setDepth(this.layers.length + 1).setFrame(0);
-        this.lixoAzul = this.add.sprite(CONFIG.TILE_SIZE*17, 4 * CONFIG.TILE_SIZE, 'lixeira', 'lixeiraAzul').setOrigin(0, 1).setDepth(this.player.depth-1).setFrame(3);  
-    }
 
 }

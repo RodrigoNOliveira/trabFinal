@@ -88,7 +88,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
 
             //FAZER O TOUCH SEGUIR O PLAYER 
             let tx, ty;
-            let distance = 16;
+            let distance = 8;
             switch(this.direction){
                 case 'down':
                     tx = 0;
