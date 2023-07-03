@@ -74,15 +74,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
             this.isAction = true;
         }
         else{
-            this.isAction = false;
-        }
-
-
-        if(this.body.velocity.x ===0 && this.body.velocity.y ===0){
+            this.isAction = false; 
+            if(this.body.velocity.x ===0 && this.body.velocity.y ===0){
             this.play('idle-' + this.direction, true);
         } else{
             this.play('walk-' + this.direction, true);
         } 
+        }
+
+
+       
 
 
 
@@ -111,6 +112,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
             this.touch.setPosition(this.x + tx + CONFIG.TILE_SIZE/2, this.y + ty);
 
 
+    }
+
+
+    weed(){
+            this.play('walk-' + this.direction, true);
+       
     }
 
     initAnimations(){
@@ -179,24 +186,101 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
         });
 
 
-        // //SIT
+        // //WEED
 
-        // this.anims.create({
-        //     key: 'sit-right',
-        //     frames: this.anims.generateFrameNumbers('player', {start: 52,end:57 }),
-        //     frameRate: this
-        //     .frameRate,
-        //     repeat: -1
-        // });
+        this.anims.create({
+            key: 'weed-down',
+            frames: this.anims.generateFrameNumbers('player', {start: 96,end:103 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
 
-        // this.anims.create({
-        //     key: 'sit-left',
-        //     frames: this.anims.generateFrameNumbers('player', {start: 58,end:63 }),
-        //     frameRate: this
-        //     .frameRate,
-        //     repeat: -1
-        // });
+        this.anims.create({
+            key: 'weed-up',
+            frames: this.anims.generateFrameNumbers('player', {start: 104,end:111 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'weed-left',
+            frames: this.anims.generateFrameNumbers('player', {start: 112,end:119 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'weed-right',
+            frames: this.anims.generateFrameNumbers('player', {start: 120,end:127 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+
+
+
+        this.anims.create({
+            key: 'cutting-down',
+            frames: this.anims.generateFrameNumbers('player', {start: 128,end:135 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'cutting-up',
+            frames: this.anims.generateFrameNumbers('player', {start: 136,end:143 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'cutting-left',
+            frames: this.anims.generateFrameNumbers('player', {start: 144,end:151 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'cutting-right',
+            frames: this.anims.generateFrameNumbers('player', {start: 152,end:159 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
        
+        this.anims.create({
+            key: 'water-down',
+            frames: this.anims.generateFrameNumbers('player', {start: 160,end:167 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'water-up',
+            frames: this.anims.generateFrameNumbers('player', {start: 168,end:175 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'water-left',
+            frames: this.anims.generateFrameNumbers('player', {start: 176,end:183 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'water-right',
+            frames: this.anims.generateFrameNumbers('player', {start: 184,end:191 }),
+            frameRate: this
+            .frameRate,
+            repeat: -1
+        });
+       
+
 
         // //PHONE
         // this.anims.create({

@@ -1,7 +1,7 @@
 import { CONFIG } from "../config";
 
 
-export default class Vaca extends Phaser.Physics.Arcade.Sprite {
+export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
 
 
     isAction = false;
@@ -23,7 +23,7 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
     }
 
     init() {
-        this.setFrame(3);
+        this.setFrame(64);
         this.speed = 120;
         this.frameRate = 8;
 
@@ -63,7 +63,7 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
 
     update() {
 
-        if ((this.frame.name >= 8 && this.frame.name <= 15)) {
+        if ((this.frame.name >= 72 && this.frame.name <= 79)) {
             if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
                 this.moveVaca();
             }
@@ -109,7 +109,7 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
         this.play('laying', true);
         this.isAction = true;
         console.log(this.frame.name);
-        if (this.frame.name == 16) {
+        if (this.frame.name == 80) {
             this.play('down', true);
             this.isAction = true;
         }
@@ -128,7 +128,7 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
 
     levantarVaca() {
 
-        if ((this.frame.name >= 32 && this.frame.name <= 35) || (this.frame.name >= 24 && this.frame.name <= 26)) {
+        if ((this.frame.name >= 96 && this.frame.name <= 99) || (this.frame.name >= 88 && this.frame.name <= 90)) {
             this.play('up', true);
             this.isAction = true;
             console.log(this.frame.name);
@@ -159,11 +159,11 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
                 console.log("dormindo");
                 this.pararVaca();
                 console.log(this.frame.name);
-                if (this.frame.name != 16 || this.frame.name != 24) {
+                if (this.frame.name != 80 || this.frame.name != 88) {
                     this.deitarVaca();
                     console.log(this.frame.name);
                 }
-                if (this.frame.name == 24) {
+                if (this.frame.name == 88) {
                     this.play('sleep', true);
                     this.isAction = true;
                 }
@@ -181,8 +181,8 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
                 this.isAction = true;
                 break;
             case 6: //para mastigar
-                this.pararVaca();
                 this.levantarVaca();
+                this.pararVaca();
                 console.log("mastigando");
                 this.play('eating', true);
                 this.isAction = true;
@@ -202,7 +202,7 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
         //stop
         this.anims.create({
             key: 'stop',
-            frames: this.anims.generateFrameNumbers('vaca', { start: 0, end: 2 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 64, end: 66 }),
             frameRate: this
                 .frameRate,
             repeat: -1
@@ -210,21 +210,21 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: 'walk',
-            frames: this.anims.generateFrameNumbers('vaca', { start: 8, end: 15 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 72, end: 79 }),
             frameRate: this
                 .frameRate,
             repeat: -1
         });
         this.anims.create({
             key: 'laying', //deitando
-            frames: this.anims.generateFrameNumbers('vaca', { start: 16, end: 18 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 80, end: 82 }),
             frameRate: this
                 .frameRate,
             repeat: 0
         });
         this.anims.create({
             key: 'up',  //levantando
-            frames: this.anims.generateFrameNumbers('vaca', { start: 19, end: 22 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 83, end: 86 }),
             frameRate: this
                 .frameRate,
             repeat: 0
@@ -233,7 +233,7 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: 'down',
-            frames: this.anims.generateFrameNumbers('vaca', { start: 24, end: 26 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 88, end: 90 }),
             frameRate: this
                 .frameRate,
             repeat: -1
@@ -241,28 +241,28 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
 
         this.anims.create({
             key: 'sleep',
-            frames: this.anims.generateFrameNumbers('vaca', { start: 32, end: 35 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 96, end: 99 }),
             frameRate: this
                 .frameRate,
             repeat: -1
         });
         this.anims.create({
             key: 'sniffing',
-            frames: this.anims.generateFrameNumbers('vaca', { start: 40, end: 46 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 104, end: 110 }),
             frameRate: this
                 .frameRate,
             repeat: -1
         });
         this.anims.create({
             key: 'eating',
-            frames: this.anims.generateFrameNumbers('vaca', { start: 48, end: 51 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 112, end: 115 }),
             frameRate: this
                 .frameRate,
             repeat: -1
         });
         this.anims.create({
             key: 'love',
-            frames: this.anims.generateFrameNumbers('vaca', { start: 56, end: 61 }),
+            frames: this.anims.generateFrameNumbers('vaca', { start: 120, end: 125 }),
             frameRate: this
                 .frameRate,
             repeat: -1
