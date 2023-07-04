@@ -6,11 +6,16 @@ export default class Vegetal extends Phaser.Physics.Arcade.Sprite {
 
     isAction = false;
 
-    constructor(scene, x, y) {
+    frames = {
+        abobora:[32, 752,753,754,755],
+
+    }
+
+    constructor(scene, x, y, tipo) {
         super(scene, x, y, 'vegetal');
 
         // this.touch = touch;
-
+        this.tipo = tipo;
         scene.add.existing(this);               //criando a img que o jogador ve
         scene.physics.add.existing(this);       //criando o body da fisica
 
@@ -28,7 +33,7 @@ export default class Vegetal extends Phaser.Physics.Arcade.Sprite {
         this.setOrigin(0.5, 0.5);
 
         this.body.setSize(16, 16);
-        this.body.setOffset(10, 15);
+        this.body.setOffset(0, 0);
         // this.initAnimations();
         this.existe= false;
 
@@ -88,14 +93,14 @@ export default class Vegetal extends Phaser.Physics.Arcade.Sprite {
     
     cresceVegetal(){
         if(this.existe ==true){
-        if(this.frame.name == 32){
-            this.setFrame(752);
-        }else if(this.frame.name == 752){
-            this.setFrame(753);
-        } else if(this.frame.name == 753){
-            this.setFrame(754);
-        } else if(this.frame.name == 754){
-            this.setFrame(755);
+        if(this.frame.name == this.frames[this.tipo][0]){
+            this.setFrame(this.frames[this.tipo][1]);
+        }else if(this.frame.name == this.frames[this.tipo][1]){
+            this.setFrame(this.frames[this.tipo][2]);
+        } else if(this.frame.name == this.frames[this.tipo][2]){
+            this.setFrame(this.frames[this.tipo][3]);
+        } else if(this.frame.name == this.frames[this.tipo][3]){
+            this.setFrame(this.frames[this.tipo][4]);
         }}
         else{}
 

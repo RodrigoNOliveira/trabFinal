@@ -1,13 +1,13 @@
 import {AUTO} from "phaser";
 import { CONFIG } from "./src/config";
 import Fazenda from "./src/scenes/Fazenda";
-
+import Casa from "./src/scenes/Casa";
 
 const config = {
     width: CONFIG.GAME_WIDTH*1.5,
     height: CONFIG.GAME_HEIGHT*1.5,
     type: AUTO,
-    scene: [Fazenda],
+    scene: [Fazenda, Casa],
     physics: {
         default: 'arcade',
         arcade: {

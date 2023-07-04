@@ -192,13 +192,12 @@ export default class Lab extends Scene {
 
     createVegetais() {
         console.log("aaaaa");
-        this.vegetal1 = new Vegetal(this,103.75, 74);
+        this.vegetal1 = new Vegetal(this,103.75, 74, 'abobora');
         this.vegetal1.setDepth(this.layers.length + 1);
 
 
         this.vegetal2 = new Vegetal(this,167.45, 74);
         this.vegetal2.setDepth(this.layers.length + 1);
-
 
 
         this.vegetal3 = new Vegetal(this, 231.784, 75);
@@ -311,6 +310,9 @@ export default class Lab extends Scene {
 
         }, {
             name: "arvore3"
+
+        }, {
+            name: "porta"
 
         }
         ]);
@@ -444,11 +446,58 @@ export default class Lab extends Scene {
 
         if (this.player.isAction) {
             this.isTouching = true;
+            if (object.name == "porta") {
+                this.scene.switch('Casa');
+        }
 
-            if (object.name == "vegetal1") {
-                console.log("teste00");
+            // if (object.name == "vegetal1") {
+            //     if (this.player.body.enable == true) {
+            //         this.player.body.enable = false;
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+            //         // initAnimationsArv()
+            //         console.log(this.vegetal1.existe);
+            //         if (this.vegetal1.existe == false) {
+            //             this.vegetal1.existe = true;
+            //             this.vegetal1.setFrame(this.vegetal1.frames[this.vegetal1.tipo][1]);
+            //             this.vegetal1.evento();
+            //             this.player.play('weed-' + this.player.direction,true);
+            //             this.player.isAction = true;
+            //         }
+
+
+            //         if (this.vegetal1.frame.name >=752 && this.vegetal1.frame.name<=754) {
+            //             this.player.play('water-' + this.player.direction, true);
+            //             this.player.isAction = true;
+            //         } else if (this.vegetal1.frame.name == 755) {
+            //             this.player.play('weed-' + this.player.direction, true);
+            //             console.log(this.player.direction);
+            //             this.player.isAction = true;
+            //             this.vegetal1.setFrame(32);
+            //             this.vegetal1.existe = false;
+            //         }
+            //     } else {
+            //         // if (this.vegetal1.frame.name == 29) {
+            //         //     this.vegetal1.setFrame(14);
+            //         // }
+            //         this.player.body.enable = true;
+            //         this.player.cursors = this.input.keyboard.addKeys({
+            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
+            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
+            //         });
+            //     }
+            // }
+
+            let vegetais=['vegetal1','vegetal2']
+            if (vegetais.includes(object.name)) {
+                let veg = this[object.name];
                 if (this.player.body.enable == true) {
-                    console.log("teste01");
                     this.player.body.enable = false;
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
@@ -457,31 +506,29 @@ export default class Lab extends Scene {
 
                     // initAnimationsArv()
                     console.log(this.vegetal1.existe);
-                    if (this.vegetal1.existe == false) {
-                        console.log("teste0");
-                        this.vegetal1.existe = true;
-                        this.vegetal1.setFrame(752);
-                        this.vegetal1.evento();
+                    if (veg.existe == false) {
+                        veg.existe = true;
+                        veg.setFrame(veg.frames[veg.tipo][1]);
+                        veg.evento();
                         this.player.play('weed-' + this.player.direction,true);
                         this.player.isAction = true;
                     }
 
 
-                    if (this.vegetal1.frame.name >=752 && this.vegetal1.frame.name<=754) {
+                    if (veg.frame.name >=752 && veg.frame.name<=754) {
                         this.player.play('water-' + this.player.direction, true);
                         this.player.isAction = true;
-                    } else if (this.vegetal1.frame.name == 755) {
+                    } else if (veg.frame.name == 755) {
                         this.player.play('weed-' + this.player.direction, true);
                         console.log(this.player.direction);
                         this.player.isAction = true;
-                        this.vegetal1.setFrame(32);
+                        veg.setFrame(32);
+                        veg.existe = false;
                     }
                 } else {
                     // if (this.vegetal1.frame.name == 29) {
                     //     this.vegetal1.setFrame(14);
                     // }
-                    console.log("teste2");
-                    // this.quadro.setDepth(this.layers.length+1);
                     this.player.body.enable = true;
                     this.player.cursors = this.input.keyboard.addKeys({
                         up: Phaser.Input.Keyboard.KeyCodes.UP,
@@ -492,6 +539,305 @@ export default class Lab extends Scene {
                     });
                 }
             }
+
+
+            // if (object.name == "vegetal3") {
+            //     if (this.player.body.enable == true) {
+            //         this.player.body.enable = false;
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+            //         // initAnimationsArv()
+            //         console.log(this.vegetal3.existe);
+            //         if (this.vegetal3.existe == false) {
+            //             this.vegetal3.existe = true;
+            //             this.vegetal3.setFrame(752);
+            //             this.vegetal3.evento();
+            //             this.player.play('weed-' + this.player.direction,true);
+            //             this.player.isAction = true;
+            //         }
+
+
+            //         if (this.vegetal3.frame.name >=752 && this.vegetal3.frame.name<=754) {
+            //             this.player.play('water-' + this.player.direction, true);
+            //             this.player.isAction = true;
+            //         } else if (this.vegetal3.frame.name == 755) {
+            //             this.player.play('weed-' + this.player.direction, true);
+            //             console.log(this.player.direction);
+            //             this.player.isAction = true;
+            //             this.vegetal2.setFrame(32);
+            //             this.vegetal1.existe = false;
+            //         }
+            //     } else {
+            //         this.player.body.enable = true;
+            //         this.player.cursors = this.input.keyboard.addKeys({
+            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
+            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
+            //         });
+            //     }
+            // }
+
+            // if (object.name == "vegetal4") {
+            //     if (this.player.body.enable == true) {
+            //         this.player.body.enable = false;
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+            //         // initAnimationsArv()
+            //         console.log(this.vegetal4.existe);
+            //         if (this.vegetal4.existe == false) {
+            //             this.vegetal4.existe = true;
+            //             this.vegetal4.setFrame(752);
+            //             this.vegetal4.evento();
+            //             this.player.play('weed-' + this.player.direction,true);
+            //             this.player.isAction = true;
+            //         }
+
+
+            //         if (this.vegetal4.frame.name >=752 && this.vegetal4.frame.name<=754) {
+            //             this.player.play('water-' + this.player.direction, true);
+            //             this.player.isAction = true;
+            //         } else if (this.vegetal4.frame.name == 755) {
+            //             this.player.play('weed-' + this.player.direction, true);
+            //             console.log(this.player.direction);
+            //             this.player.isAction = true;
+            //             this.vegetal4.setFrame(32);
+            //             this.vegetal1.existe = false;
+            //         }
+                    
+            //     } else {
+            //         this.player.body.enable = true;
+            //         this.player.cursors = this.input.keyboard.addKeys({
+            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
+            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
+            //         });
+            //     }
+            // }
+
+            // if (object.name == "vegetal2") {
+            //     if (this.player.body.enable == true) {
+            //         this.player.body.enable = false;
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+            //         // initAnimationsArv()
+            //         console.log(this.vegetal2.existe);
+            //         if (this.vegetal2.existe == false) {
+            //             this.vegetal2.existe = true;
+            //             this.vegetal2.setFrame(752);
+            //             this.vegetal2.evento();
+            //             this.player.play('weed-' + this.player.direction,true);
+            //             this.player.isAction = true;
+            //         }
+
+
+            //         if (this.vegetal2.frame.name >=752 && this.vegetal2.frame.name<=754) {
+            //             this.player.play('water-' + this.player.direction, true);
+            //             this.player.isAction = true;
+            //         } else if (this.vegetal2.frame.name == 755) {
+            //             this.player.play('weed-' + this.player.direction, true);
+            //             console.log(this.player.direction);
+            //             this.player.isAction = true;
+            //             this.vegetal2.setFrame(32);
+            //             this.vegetal1.existe = false;
+            //         }
+            //     } else {
+            //         // if (this.vegetal1.frame.name == 29) {
+            //         //     this.vegetal1.setFrame(14);
+            //         // }
+            //         this.player.body.enable = true;
+            //         this.player.cursors = this.input.keyboard.addKeys({
+            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
+            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
+            //         });
+            //     }
+            // }
+
+            // if (object.name == "vegetal5") {
+            //     if (this.player.body.enable == true) {
+            //         this.player.body.enable = false;
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+            //         // initAnimationsArv()
+            //         console.log(this.vegetal5.existe);
+            //         if (this.vegetal5.existe == false) {
+            //             this.vegetal5.existe = true;
+            //             this.vegetal5.setFrame(752);
+            //             this.vegetal5.evento();
+            //             this.player.play('weed-' + this.player.direction,true);
+            //             this.player.isAction = true;
+            //         }
+
+
+            //         if (this.vegetal5.frame.name >=752 && this.vegetal5.frame.name<=754) {
+            //             this.player.play('water-' + this.player.direction, true);
+            //             this.player.isAction = true;
+            //         } else if (this.vegetal5.frame.name == 755) {
+            //             this.player.play('weed-' + this.player.direction, true);
+            //             console.log(this.player.direction);
+            //             this.player.isAction = true;
+            //             this.vegetal5.setFrame(32);
+            //             this.vegetal1.existe = false;
+            //         }
+            //     } else {
+            //         // if (this.vegetal1.frame.name == 29) {
+            //         //     this.vegetal1.setFrame(14);
+            //         // }
+            //         this.player.body.enable = true;
+            //         this.player.cursors = this.input.keyboard.addKeys({
+            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
+            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
+            //         });
+            //     }
+            // }
+
+            // if (object.name == "vegetal6") {
+            //     if (this.player.body.enable == true) {
+            //         this.player.body.enable = false;
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+            //         // initAnimationsArv()
+            //         console.log(this.vegetal6.existe);
+            //         if (this.vegetal6.existe == false) {
+            //             this.vegetal6.existe = true;
+            //             this.vegetal6.setFrame(752);
+            //             this.vegetal6.evento();
+            //             this.player.play('weed-' + this.player.direction,true);
+            //             this.player.isAction = true;
+            //         }
+
+
+            //         if (this.vegetal6.frame.name >=752 && this.vegetal6.frame.name<=754) {
+            //             this.player.play('water-' + this.player.direction, true);
+            //             this.player.isAction = true;
+            //         } else if (this.vegetal6.frame.name == 755) {
+            //             this.player.play('weed-' + this.player.direction, true);
+            //             console.log(this.player.direction);
+            //             this.player.isAction = true;
+            //             this.vegetal6.setFrame(32);
+            //             this.vegetal1.existe = false;
+            //         }
+            //     } else {
+            //         this.player.body.enable = true;
+            //         this.player.cursors = this.input.keyboard.addKeys({
+            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
+            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
+            //         });
+            //     }
+            // }
+
+            // if (object.name == "vegetal7") {
+            //     if (this.player.body.enable == true) {
+            //         this.player.body.enable = false;
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+            //         // initAnimationsArv()
+            //         console.log(this.vegetal7.existe);
+            //         if (this.vegetal7.existe == false) {
+            //             this.vegetal7.existe = true;
+            //             this.vegetal7.setFrame(752);
+            //             this.vegetal7.evento();
+            //             this.player.play('weed-' + this.player.direction,true);
+            //             this.player.isAction = true;
+            //         }
+
+
+            //         if (this.vegetal7.frame.name >=752 && this.vegetal7.frame.name<=754) {
+            //             this.player.play('water-' + this.player.direction, true);
+            //             this.player.isAction = true;
+            //         } else if (this.vegetal7.frame.name == 755) {
+            //             this.player.play('weed-' + this.player.direction, true);
+            //             console.log(this.player.direction);
+            //             this.player.isAction = true;
+            //             this.vegetal7.setFrame(32);
+            //             this.vegetal1.existe = false;
+            //         }
+            //     } else {
+            //         this.player.body.enable = true;
+            //         this.player.cursors = this.input.keyboard.addKeys({
+            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
+            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
+            //         });
+            //     }
+            // }
+
+            // if (object.name == "vegetal8") {
+            //     if (this.player.body.enable == true) {
+            //         this.player.body.enable = false;
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+            //         // initAnimationsArv()
+            //         console.log(this.vegetal8.existe);
+            //         if (this.vegetal8.existe == false) {
+            //             this.vegetal8.existe = true;
+            //             this.vegetal8.setFrame(752);
+            //             this.vegetal8.evento();
+            //             this.player.play('weed-' + this.player.direction,true);
+            //             this.player.isAction = true;
+            //         }
+
+
+            //         if (this.vegetal8.frame.name >=752 && this.vegetal8.frame.name<=754) {
+            //             this.player.play('water-' + this.player.direction, true);
+            //             this.player.isAction = true;
+            //         } else if (this.vegetal8.frame.name == 755) {
+            //             this.player.play('weed-' + this.player.direction, true);
+            //             console.log(this.player.direction);
+            //             this.player.isAction = true;
+            //             this.vegetal8.setFrame(32);
+            //             this.vegetal1.existe = false; 
+            //         }
+            //     } else {
+            //         // if (this.vegetal1.frame.name == 29) {
+            //         //     this.vegetal1.setFrame(14);
+            //         // }
+            //         this.player.body.enable = true;
+            //         this.player.cursors = this.input.keyboard.addKeys({
+            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
+            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
+            //         });
+            //     }
+            // }
+
 
 
 
@@ -794,6 +1140,10 @@ export default class Lab extends Scene {
                     this.player.setDepth(2);
                 }
             }
+
+
+            
+
         }
     }
 

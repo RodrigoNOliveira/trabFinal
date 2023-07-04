@@ -92,20 +92,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite{
             let distance = 8;
             switch(this.direction){
                 case 'down':
-                    tx = 0;
-                    ty = distance;
+                    tx = -8;
+                    ty = 10;
                     break;
                 case 'up':
-                    tx = 0;
-                    ty = -distance + CONFIG.TILE_SIZE;
+                    tx = -8;
+                    ty = -distance;
                     break;
                 case 'right':
-                    tx = distance/2;
-                    ty = CONFIG.TILE_SIZE/2;
+                    tx = 2;
+                    ty = 0;
                     break;
                 case 'left':
-                    tx = -distance/2;
-                    ty = CONFIG.TILE_SIZE/2;
+                    tx = -distance*2;
+                    ty = 0;
                     break;
                 
             }
