@@ -36,31 +36,9 @@ export default class Arvore extends Phaser.Physics.Arcade.Sprite {
 
 
 
-
-        // if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
-        //     this.play('stop', true);
-        //     this.isAction = false;
-        // } else {
-        //     this.play('walk', true);
-        //     this.isAction = true;
-        // }
-
-        
-
-        // this.deitarVaca();
     }
 
     update() {
-
-        // if((this.frame.name>=8 && this.frame.name<=15)){
-        //      if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
-        //     this.moveVaca();
-        // } 
-        
-        // }
-       
-
-        // this.acaoVaca();
 
 
     }
@@ -68,7 +46,7 @@ export default class Arvore extends Phaser.Physics.Arcade.Sprite {
 
     restart(){
         this.timeEvent = this.scene.time.addEvent({
-            delay: 5000,
+            delay: 180000,
             callback: this.setFrame(12),
             loop: true,
             callbackScope: this
@@ -77,7 +55,7 @@ export default class Arvore extends Phaser.Physics.Arcade.Sprite {
 
     evento(){
         this.timeEvent = this.scene.time.addEvent({
-            delay: 5000,
+            delay: 180000,
             callback: this.cresceArvore,
             loop: true,
             callbackScope: this

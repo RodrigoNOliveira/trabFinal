@@ -26,31 +26,60 @@ export default class Lab extends Scene {
     /**@type {Arvore} */
     arvore3;
 
-  
+
 
     /**@type {Vegetal} */
     vegetal1;
-    
+
     /**@type {Vegetal} */
     vegetal2;
-    
+
     /**@type {Vegetal} */
     vegetal3;
-    
+
     /**@type {Vegetal} */
     vegetal4;
-    
+
     /**@type {Vegetal} */
     vegetal5;
-    
+
     /**@type {Vegetal} */
     vegetal6;
-    
+
     /**@type {Vegetal} */
     vegetal7;
-    
+
     /**@type {Vegetal} */
     vegetal8;
+
+
+    /**@type {Phaser.Physics.Arcade.Sprite} */
+    icMaca;
+    /**@type {Phaser.Physics.Arcade.Sprite} */
+    icTrigo;
+    /**@type {Phaser.Physics.Arcade.Sprite} */
+    icRepolho;
+    /**@type {Phaser.Physics.Arcade.Sprite} */
+    icAbobora;
+    /**@type {Phaser.Physics.Arcade.Sprite} */
+    icNabo;
+
+
+    rep = 0;
+    /**@type {Phaser.GameObjects.Text} */
+    macatext;
+    mac = 0;
+    /**@type {Phaser.GameObjects.Text} */
+    repolhotext;
+    trig = 0;
+    /**@type {Phaser.GameObjects.Text} */
+    trigotext;
+    nab = 0;
+    /**@type {Phaser.GameObjects.Text} */
+    nabotext;
+    abbr = 0;
+    /**@type {Phaser.GameObjects.Text} */
+    aboboratext;
 
 
     /**@type {Vaca} */
@@ -60,28 +89,16 @@ export default class Lab extends Scene {
 
 
 
+
     touch;
 
     /**@type {Phaser.Physics.Arcade.Group} */
     groupObjects;
 
 
-    /**@type {Phaser.GameObjects.Text} */
-    text;
-
-    // /**@type {Phaser.Physics.Arcade.Sprite} */
-    //  vegetal;
-
-    // /**@type {Phaser.Physics.Arcade.Sprite} */
-    // vegetal1;
-
-    // /**@type {Phaser.Physics.Arcade.Sprite} */
-    // vegetal2;
 
 
     /**@type {Phaser} */
-
-
 
     isTouching = false;
     // isTouchingVaca = false;
@@ -122,11 +139,14 @@ export default class Lab extends Scene {
             frameHeight: CONFIG.TILE_SIZE * 3
         })
 
+        this.load.spritesheet('icones', 'mapas/tiles/geral.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        })
         this.load.spritesheet('vegetal', 'mapas/tiles/geral.png', {
             frameWidth: 16,
             frameHeight: 16
         })
-
 
     }
 
@@ -142,28 +162,43 @@ export default class Lab extends Scene {
         this.createPlayer();
         this.createVaca();
         this.createVaca2();
-        
-        
+
+
         this.createArvores();
         this.createVegetais();
+        this.createIcones();
         this.createObjects();
         this.createColliders();
         this.createCamera();
 
 
         const style = { color: '#000', fontSize: 10, backgroundColor: '#fff', padding: 5 }
-        this.text = this.add.text(this.scale.width / 2, this.scale.height - this.scale.height / 5, "", style);
-        this.text.setScrollFactor(0);
-        this.text.setOrigin(0.5, 0);
-        this.text.visible = false;
+        this.macatext = this.add.text(CONFIG.TILE_SIZE * 2, CONFIG.TILE_SIZE * 1, "0", style);
+        this.macatext.setScrollFactor(0);
+        this.macatext.setOrigin(0.5, 0);
+        this.macatext.visible = true;
 
 
-        const style1 = { color: '#000', fontSize: 10 }
-        this.quadro = this.add.text(this.scale.width / 2, this.scale.height / 10, "", style1);
-        this.quadro.setOrigin(0.5, 0);
-        this.quadro.visible = false;
-        this.quadro.setDepth(this.player.depth - 1);
-        console.log(this.quadro.depth, this.player.depth);
+        this.repolhotext = this.add.text(CONFIG.TILE_SIZE * 4, CONFIG.TILE_SIZE * 1, "0", style);
+        this.repolhotext.setScrollFactor(0);
+        this.repolhotext.setOrigin(0.5, 0);
+        this.repolhotext.visible = true;
+
+        this.trigotext = this.add.text(CONFIG.TILE_SIZE * 6, CONFIG.TILE_SIZE * 1, "0", style);
+        this.trigotext.setScrollFactor(0);
+        this.trigotext.setOrigin(0.5, 0);
+        this.trigotext.visible = true;
+
+        this.nabotext = this.add.text(CONFIG.TILE_SIZE * 8, CONFIG.TILE_SIZE * 1, "0", style);
+        this.nabotext.setScrollFactor(0);
+        this.nabotext.setOrigin(0.5, 0);
+        this.nabotext.visible = true;
+
+        this.aboboratext = this.add.text(CONFIG.TILE_SIZE * 10, CONFIG.TILE_SIZE * 1, "0", style);
+        this.aboboratext.setScrollFactor(0);
+        this.aboboratext.setOrigin(0.5, 0);
+        this.aboboratext.visible = true;
+
 
         this.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
 
@@ -177,7 +212,6 @@ export default class Lab extends Scene {
 
     createArvores() {
 
-        console.log("bbbb");
         this.arvore1 = new Arvore(this, 569.5, 298.5);
         this.arvore1.setDepth(this.layers.length + 1);
 
@@ -191,32 +225,32 @@ export default class Lab extends Scene {
     }
 
     createVegetais() {
-        console.log("aaaaa");
-        this.vegetal1 = new Vegetal(this,103.75, 74, 'abobora');
+
+        this.vegetal1 = new Vegetal(this, 103.75, 74, 'abobora');
         this.vegetal1.setDepth(this.layers.length + 1);
 
 
-        this.vegetal2 = new Vegetal(this,167.45, 74);
+        this.vegetal2 = new Vegetal(this, 167.45, 74, 'repolho');
         this.vegetal2.setDepth(this.layers.length + 1);
 
 
-        this.vegetal3 = new Vegetal(this, 231.784, 75);
+        this.vegetal3 = new Vegetal(this, 231.784, 75, 'trigo');
         this.vegetal3.setDepth(this.layers.length + 1);
 
-        this.vegetal4 = new Vegetal(this, 295.489, 74);
+        this.vegetal4 = new Vegetal(this, 295.489, 74, 'nabo');
         this.vegetal4.setDepth(this.layers.length + 1);
 
 
-        this.vegetal5 = new Vegetal(this, 103.875, 120);
+        this.vegetal5 = new Vegetal(this, 103.875, 120, 'abobora');
         this.vegetal5.setDepth(this.layers.length + 1);
 
-        this.vegetal6 = new Vegetal(this, 167.58, 120);
+        this.vegetal6 = new Vegetal(this, 167.58, 120, 'repolho');
         this.vegetal6.setDepth(this.layers.length + 1);
 
-        this.vegetal7 = new Vegetal(this, 231.908, 120);
+        this.vegetal7 = new Vegetal(this, 231.908, 120, 'trigo');
         this.vegetal7.setDepth(this.layers.length + 1);
 
-        this.vegetal8 = new Vegetal(this, 295.613, 120);
+        this.vegetal8 = new Vegetal(this, 295.613, 120, 'nabo');
         this.vegetal8.setDepth(this.layers.length + 1);
     }
 
@@ -224,7 +258,7 @@ export default class Lab extends Scene {
     createPlayer() {
         this.touch = new Touch(this, 16 * 8, 16 * 5);
 
-        this.player = new Player(this, 16 * 8, 16 * 5, this.touch);
+        this.player = new Player(this, 16 * 16, 16 * 33, this.touch);
         this.player.setDepth(4);
 
 
@@ -241,9 +275,6 @@ export default class Lab extends Scene {
         this.vaca.body.checkCollision.right = true;
         this.vaca.body.checkCollision.down = true;
 
-
-
-        // this.add.sprite(CONFIG.TILE_SIZE*16, 4*CONFIG.TILE_SIZE, 'vaca', 'vaca').setOrigin(0, 1).setDepth(this.layers.length + 1).setFrame(0);
     }
 
     createVaca2() {
@@ -255,7 +286,6 @@ export default class Lab extends Scene {
         this.vaca2.body.checkCollision.right = true;
         this.vaca2.body.checkCollision.down = true;
 
-        // this.add.sprite(CONFIG.TILE_SIZE*16, 4*CONFIG.TILE_SIZE, 'vaca', 'vaca').setOrigin(0, 1).setDepth(this.layers.length + 1).setFrame(0);
     }
 
 
@@ -301,7 +331,7 @@ export default class Lab extends Scene {
         {
             name: "vegetal8"
         },
-        
+
         {
             name: "arvore1"
 
@@ -329,7 +359,6 @@ export default class Lab extends Scene {
             obj.setVisible(false);
 
             this.groupObjects.add(obj);
-            console.log(obj);
         }
 
 
@@ -338,6 +367,26 @@ export default class Lab extends Scene {
 
     }
 
+    createIcones() {
+        
+        this.icMaca = this.add.sprite(CONFIG.TILE_SIZE * 1,  1.5 * CONFIG.TILE_SIZE, 'icones').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(674).setScrollFactor(0);
+
+        this.icRepolho = this.add.sprite(CONFIG.TILE_SIZE * 3,  1.5 * CONFIG.TILE_SIZE, 'icones').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(793).setScrollFactor(0);
+
+        this.icTrigo = this.add.sprite(CONFIG.TILE_SIZE * 5,  1.5* CONFIG.TILE_SIZE, 'icones').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(721).setScrollFactor(0);
+
+
+        this.icNabo = this.add.sprite(CONFIG.TILE_SIZE * 7,  1.5 * CONFIG.TILE_SIZE, 'icones').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(769).setScrollFactor(0);
+
+        this.icAbobora = this.add.sprite(CONFIG.TILE_SIZE *9 , 1.5 * CONFIG.TILE_SIZE, 'icones').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(745).setScrollFactor(0);
+
+        
+
+        
+        
+       
+
+    }
 
     createLayers() {
         const tilesFazenda = this.map.getTileset('geral');
@@ -408,6 +457,8 @@ export default class Lab extends Scene {
                 this.physics.add.collider(this.player, this.layers[name]);
                 this.physics.add.collider(this.vaca, this.layers[name]);
                 this.physics.add.collider(this.vaca2, this.layers[name]);
+                // this.physics.add.collider(this.vaca, this.player);
+                // this.physics.add.collider(this.vaca2, this.player);
 
             }
 
@@ -416,21 +467,43 @@ export default class Lab extends Scene {
 
         //chama a funcao this.handleTouch toda vez que o this.touch entrar em contato com um objeto do this.groupObjects
         this.physics.add.overlap(this.touch, this.groupObjects, this.handleTouch, undefined, this);
+        this.physics.add.overlap(this.touch, this.vaca, this.handleTouchVaca, undefined, this);
+        this.physics.add.overlap(this.touch, this.vaca2, this.handleTouchVaca1, undefined, this);
     }
 
 
+    handleTouchVaca(touch, vaca) {
+        if (this.isTouching && this.player.isAction) {
+            return;
+        }
 
-    // handleVaca() {
+        if (this.isTouching && !this.player.isAction) {
+            this.isTouching = false;
+            return;
+        }
+        if (this.player.isAction) {
+            this.isTouching = true;
+            this.vaca.play('love', true);
+            this.vaca.isAction = true;
+        }
+    }
 
-    //     if (this.vaca.body.touching.up || this.vaca.body.touching.down || this.vaca.body.touching.left || this.vaca.body.touching.right){
-    //         this.vaca.setFlipX(true);
-    //         this.vaca.setVelocity(this.vaca.body.velocity *-1);
-    //     }
+    handleTouchVaca1(touch, vaca2) {
+        if (this.isTouching && this.player.isAction) {
+            return;
+        }
 
-    //     }
+        if (this.isTouching && !this.player.isAction) {
+            this.isTouching = false;
+            return;
+        }
 
-
-
+        if (this.player.isAction) {
+            this.isTouching = true;
+            this.vaca2.play('love', true);
+            this.vaca2.isAction = true;
+        }
+    }
 
     handleTouch(touch, object) {
 
@@ -448,54 +521,12 @@ export default class Lab extends Scene {
             this.isTouching = true;
             if (object.name == "porta") {
                 this.scene.switch('Casa');
-        }
-
-            // if (object.name == "vegetal1") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-            //         console.log(this.vegetal1.existe);
-            //         if (this.vegetal1.existe == false) {
-            //             this.vegetal1.existe = true;
-            //             this.vegetal1.setFrame(this.vegetal1.frames[this.vegetal1.tipo][1]);
-            //             this.vegetal1.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
+            }
 
 
-            //         if (this.vegetal1.frame.name >=752 && this.vegetal1.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal1.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal1.setFrame(32);
-            //             this.vegetal1.existe = false;
-            //         }
-            //     } else {
-            //         // if (this.vegetal1.frame.name == 29) {
-            //         //     this.vegetal1.setFrame(14);
-            //         // }
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-            let vegetais=['vegetal1','vegetal2']
+            let vegetais = ['vegetal1', 'vegetal2', 'vegetal3', 'vegetal4', 'vegetal5', 'vegetal6', 'vegetal7', 'vegetal8']
             if (vegetais.includes(object.name)) {
+
                 let veg = this[object.name];
                 if (this.player.body.enable == true) {
                     this.player.body.enable = false;
@@ -505,30 +536,39 @@ export default class Lab extends Scene {
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
                     // initAnimationsArv()
-                    console.log(this.vegetal1.existe);
                     if (veg.existe == false) {
                         veg.existe = true;
                         veg.setFrame(veg.frames[veg.tipo][1]);
                         veg.evento();
-                        this.player.play('weed-' + this.player.direction,true);
+                        this.player.play('weed-' + this.player.direction, true);
                         this.player.isAction = true;
                     }
 
 
-                    if (veg.frame.name >=752 && veg.frame.name<=754) {
+                    if (veg.frame.name > veg.frames[veg.tipo][1] && veg.frame.name <= veg.frames[veg.tipo][3]) {
                         this.player.play('water-' + this.player.direction, true);
                         this.player.isAction = true;
-                    } else if (veg.frame.name == 755) {
+
+                    } else if (veg.frame.name == veg.frames[veg.tipo][4]) {
                         this.player.play('weed-' + this.player.direction, true);
-                        console.log(this.player.direction);
                         this.player.isAction = true;
-                        veg.setFrame(32);
+                        veg.setFrame(veg.frames[veg.tipo][0]);
                         veg.existe = false;
+                        if(veg.tipo=='abobora'){
+                            this.abbr+=2;
+                            this.aboboratext.text= ''+this.abbr;
+                        } else if(veg.tipo=='repolho'){
+                            this.rep+=2;
+                            this.repolhotext.text= ''+this.rep;
+                        } else if(veg.tipo=='trigo'){
+                            this.trig+=2;
+                            this.trigotext.text= ''+this.trig;
+                        } else if(veg.tipo=='nabo'){
+                            this.nab+=2;
+                            this.nabotext.text= ''+this.nab;
+                        }
                     }
                 } else {
-                    // if (this.vegetal1.frame.name == 29) {
-                    //     this.vegetal1.setFrame(14);
-                    // }
                     this.player.body.enable = true;
                     this.player.cursors = this.input.keyboard.addKeys({
                         up: Phaser.Input.Keyboard.KeyCodes.UP,
@@ -540,357 +580,6 @@ export default class Lab extends Scene {
                 }
             }
 
-
-            // if (object.name == "vegetal3") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-            //         console.log(this.vegetal3.existe);
-            //         if (this.vegetal3.existe == false) {
-            //             this.vegetal3.existe = true;
-            //             this.vegetal3.setFrame(752);
-            //             this.vegetal3.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
-
-
-            //         if (this.vegetal3.frame.name >=752 && this.vegetal3.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal3.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal2.setFrame(32);
-            //             this.vegetal1.existe = false;
-            //         }
-            //     } else {
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-            // if (object.name == "vegetal4") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-            //         console.log(this.vegetal4.existe);
-            //         if (this.vegetal4.existe == false) {
-            //             this.vegetal4.existe = true;
-            //             this.vegetal4.setFrame(752);
-            //             this.vegetal4.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
-
-
-            //         if (this.vegetal4.frame.name >=752 && this.vegetal4.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal4.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal4.setFrame(32);
-            //             this.vegetal1.existe = false;
-            //         }
-                    
-            //     } else {
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-            // if (object.name == "vegetal2") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-            //         console.log(this.vegetal2.existe);
-            //         if (this.vegetal2.existe == false) {
-            //             this.vegetal2.existe = true;
-            //             this.vegetal2.setFrame(752);
-            //             this.vegetal2.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
-
-
-            //         if (this.vegetal2.frame.name >=752 && this.vegetal2.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal2.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal2.setFrame(32);
-            //             this.vegetal1.existe = false;
-            //         }
-            //     } else {
-            //         // if (this.vegetal1.frame.name == 29) {
-            //         //     this.vegetal1.setFrame(14);
-            //         // }
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-            // if (object.name == "vegetal5") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-            //         console.log(this.vegetal5.existe);
-            //         if (this.vegetal5.existe == false) {
-            //             this.vegetal5.existe = true;
-            //             this.vegetal5.setFrame(752);
-            //             this.vegetal5.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
-
-
-            //         if (this.vegetal5.frame.name >=752 && this.vegetal5.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal5.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal5.setFrame(32);
-            //             this.vegetal1.existe = false;
-            //         }
-            //     } else {
-            //         // if (this.vegetal1.frame.name == 29) {
-            //         //     this.vegetal1.setFrame(14);
-            //         // }
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-            // if (object.name == "vegetal6") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-            //         console.log(this.vegetal6.existe);
-            //         if (this.vegetal6.existe == false) {
-            //             this.vegetal6.existe = true;
-            //             this.vegetal6.setFrame(752);
-            //             this.vegetal6.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
-
-
-            //         if (this.vegetal6.frame.name >=752 && this.vegetal6.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal6.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal6.setFrame(32);
-            //             this.vegetal1.existe = false;
-            //         }
-            //     } else {
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-            // if (object.name == "vegetal7") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-            //         console.log(this.vegetal7.existe);
-            //         if (this.vegetal7.existe == false) {
-            //             this.vegetal7.existe = true;
-            //             this.vegetal7.setFrame(752);
-            //             this.vegetal7.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
-
-
-            //         if (this.vegetal7.frame.name >=752 && this.vegetal7.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal7.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal7.setFrame(32);
-            //             this.vegetal1.existe = false;
-            //         }
-            //     } else {
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-            // if (object.name == "vegetal8") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-            //         console.log(this.vegetal8.existe);
-            //         if (this.vegetal8.existe == false) {
-            //             this.vegetal8.existe = true;
-            //             this.vegetal8.setFrame(752);
-            //             this.vegetal8.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
-
-
-            //         if (this.vegetal8.frame.name >=752 && this.vegetal8.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal8.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal8.setFrame(32);
-            //             this.vegetal1.existe = false; 
-            //         }
-            //     } else {
-            //         // if (this.vegetal1.frame.name == 29) {
-            //         //     this.vegetal1.setFrame(14);
-            //         // }
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-
-
-
-
-            // if (object.name == "vegetal1") {
-            //     if (this.player.body.enable == true) {
-            //         this.player.body.enable = false;
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-            //         this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-            //         // initAnimationsArv()
-
-            //         if (this.vegetal1.existe == false) {
-            //             console.log("teste0");
-            //             this.vegetal1.existe = true;
-            //             this.vegetal1.setFrame(32);
-            //             this.vegetal1.evento();
-            //             this.player.play('weed-' + this.player.direction,true);
-            //             this.player.isAction = true;
-            //         }
-
-
-            //         if (this.vegetal1.frame.name >=752 && this.vegetal1.frame.name<=754) {
-            //             this.player.play('water-' + this.player.direction, true);
-            //             this.player.isAction = true;
-            //         } else if (this.vegetal1.frame.name == 755) {
-            //             this.player.play('weed-' + this.player.direction, true);
-            //             console.log(this.player.direction);
-            //             this.player.isAction = true;
-            //             this.vegetal1.setFrame(32);
-            //         }
-            //     } else {
-            //         // if (this.vegetal1.frame.name == 29) {
-            //         //     this.vegetal1.setFrame(14);
-            //         // }
-            //         console.log("TESTE");
-            //         // this.quadro.setDepth(this.layers.length+1);
-            //         this.player.body.enable = true;
-            //         this.player.cursors = this.input.keyboard.addKeys({
-            //             up: Phaser.Input.Keyboard.KeyCodes.UP,
-            //             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-            //             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            //             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            //             space: Phaser.Input.Keyboard.KeyCodes.SPACE
-            //         });
-            //     }
-            // }
-
-
-
-
             if (object.name == "arvore1") {
                 if (this.player.body.enable == true) {
                     this.player.body.enable = false;
@@ -899,8 +588,6 @@ export default class Lab extends Scene {
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
-                    // initAnimationsArv()
-                    console.log(this.arvore1.existe);
                     if (this.arvore1.existe == false) {
                         this.arvore1.existe = true;
                         this.arvore1.setFrame(12);
@@ -915,18 +602,17 @@ export default class Lab extends Scene {
                         this.arvore1.isAction = true;
                     } else if (this.arvore1.frame.name == 15) {
                         this.player.play('cutting-' + this.player.direction, true);
-                        console.log(this.player.direction);
                         this.player.isAction = true;
                         this.arvore1.play('balance1', true);
                         this.arvore1.isAction = true;
                         this.arvore1.setFrame(12);
+                        this.mac+=3;
+                        this.macatext.text= ''+this.mac;
                     }
                 } else {
                     if (this.arvore1.frame.name == 29) {
                         this.arvore1.setFrame(14);
                     }
-                    console.log("TESTE");
-                    // this.quadro.setDepth(this.layers.length+1);
                     this.player.body.enable = true;
                     this.player.cursors = this.input.keyboard.addKeys({
                         up: Phaser.Input.Keyboard.KeyCodes.UP,
@@ -947,9 +633,6 @@ export default class Lab extends Scene {
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
-                    // initAnimationsArv()
-
-
                     if (this.arvore2.existe == false) {
                         this.arvore2.existe = true;
                         this.arvore2.setFrame(12);
@@ -968,13 +651,13 @@ export default class Lab extends Scene {
                         this.arvore2.play('balance1', true);
                         this.arvore2.isAction = true;
                         this.arvore2.setFrame(12);
+                        this.mac+=3;
+                        this.macatext.text= ''+this.mac;
                     }
                 } else {
                     if (this.arvore2.frame.name == 29) {
                         this.arvore2.setFrame(14);
                     }
-                    console.log("TESTE");
-                    // this.quadro.setDepth(this.layers.length+1);
                     this.player.body.enable = true;
                     this.player.cursors = this.input.keyboard.addKeys({
                         up: Phaser.Input.Keyboard.KeyCodes.UP,
@@ -995,8 +678,6 @@ export default class Lab extends Scene {
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
                     this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
-                    // initAnimationsArv()
-
 
                     if (this.arvore3.existe == false) {
                         this.arvore3.existe = true;
@@ -1015,13 +696,13 @@ export default class Lab extends Scene {
                         this.player.isAction = true;
                         this.arvore3.play('balance1', true);
                         this.arvore3.isAction = true;
+                        this.mac+=3;
+                        this.macatext.text= ''+this.mac;
                     }
                 } else {
                     if (this.arvore3.frame.name == 29) {
                         this.arvore3.setFrame(14);
                     }
-                    console.log("TESTE");
-                    // this.quadro.setDepth(this.layers.length+1);
                     this.player.body.enable = true;
                     this.player.cursors = this.input.keyboard.addKeys({
                         up: Phaser.Input.Keyboard.KeyCodes.UP,
@@ -1048,7 +729,6 @@ export default class Lab extends Scene {
                     this.quadro.visible = false;
 
                 } else {
-                    console.log("TESTE");
                     this.player.body.enable = true;
 
                     this.player.cursors = this.input.keyboard.addKeys({
@@ -1060,239 +740,7 @@ export default class Lab extends Scene {
                     });
                 }
             }
-
-
-            if (object.name == "lixeira") {
-                if (this.player.body.enable == true) {
-                    this.player.body.enable = false;
-                    this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-                    this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-                    this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-                    this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-                    if (object.x == 263.439393939394) {
-                        if (this.lixoLaranja.frame.name == 0) {
-                            this.lixoLaranja.setFrame(1);
-                        } else if (this.lixoLaranja.frame.name == 1 && this.lixoAzul.frame.name != 5) {
-                            this.lixoLaranja.setFrame(2);
-                        } else {
-                            this.lixoLaranja.setFrame(0);
-                        }
-
-                    } else if (object.x == 280.25) {
-                        if (this.lixoAzul.frame.name == 3) {
-                            this.lixoAzul.setFrame(4);
-                        } else if (this.lixoAzul.frame.name == 4 && this.lixoLaranja.frame.name != 2) {
-                            this.lixoAzul.setFrame(5);
-                        } else {
-                            this.lixoAzul.setFrame(3);
-                        }
-                    }
-                } else {
-                    console.log("TESTE");
-                    this.player.body.enable = true;
-                    this.player.cursors = this.input.keyboard.addKeys({
-                        up: Phaser.Input.Keyboard.KeyCodes.UP,
-                        down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-                        left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-                        right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-                        space: Phaser.Input.Keyboard.KeyCodes.SPACE
-                    });
-                    this.player.setDepth(2);
-                }
-            }
-
-
-            if (object.name == "cadeira") {
-
-                if (this.player.body.enable == true) {
-                    this.player.body.enable = false;
-                    this.player.x = object.x - 8;
-                    this.player.y = object.y - 8;
-
-                    this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.UP);
-                    this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-                    this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-                    this.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-                    this.player.setDepth(0);
-
-                    if (object.x == 39.6667 && object.y == 70.6667) {
-                        this.player.direction = 'down';
-                        this.player.setDepth(1);
-                    } else {
-                        this.player.direction = 'up';
-                    }
-
-
-                } else {
-                    console.log("TESTE");
-                    this.player.body.enable = true;
-                    this.player.x = object.x - 8;
-                    this.player.y = object.y + 8;
-                    this.player.cursors = this.input.keyboard.addKeys({
-                        up: Phaser.Input.Keyboard.KeyCodes.UP,
-                        down: Phaser.Input.Keyboard.KeyCodes.DOWN,
-                        left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-                        right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-                        space: Phaser.Input.Keyboard.KeyCodes.SPACE
-                    });
-                    this.player.setDepth(2);
-                }
-            }
-
-
-            
-
         }
     }
 
-
-
-    // createVegetal() {
-
-
-    //     this.vegetal1 = this.add.sprite(103.75, 74, 'vegetal').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(32);
-
-    //     this.vegetal2 = this.add.sprite(167.454545454545, 74, 'vegetal').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(32);
-
-    //     this.vegetal3 = this.add.sprite(231.784, 75, 'vegetal').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(32);
-
-    //     this.vegetal4 = this.add.sprite(295.489, 74, 'vegetal').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(32);
-
-
-
-    //     this.vegetal5 = this.add.sprite(103.875, 120, 'vegetal').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(32);
-
-    //     this.vegetal6 = this.add.sprite(167.58, 120, 'vegetal').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(32);
-
-    //     this.vegetal7 = this.add.sprite(231.908, 120, 'vegetal').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(32);
-    //     this.vegetal8 = this.add.sprite(295.613, 120, 'vegetal').setOrigin(0.5, 0.5).setDepth(this.layers.length + 1).setFrame(32);
-    // }
-
-
-    // cresceVegetal1(){
-    //     if(this.vegetal1.frame.name == 32){
-    //         this.vegetal1.setFrame(752);
-    //     }else if(this.vegetal1.frame.name == 752){
-    //         this.vegetal1.setFrame(753);
-    //     } else if(this.vegetal1.frame.name == 753){
-    //         this.vegetal1.setFrame(754);
-    //     } else{
-    //         this.vegetal1.setFrame(755);
-
-    //     }
-
-    // }
-    // cresceVegetal2(){
-    //     if(this.vegetal2.frame.name == 32){
-    //         this.vegetal2.setFrame(800);
-    //     }else if(this.vegetal2.frame.name == 800){
-    //         this.vegetal2.setFrame(801);
-    //     } else if(this.vegetal2.frame.name == 801){
-    //         this.vegetal2.setFrame(802);
-    //     } else{
-    //         this.vegetal2.setFrame(803);
-    //     }
-
-    // }
-    // cresceVegetal3(){
-    //     if(this.vegetal3.frame.name == 32){
-    //         this.vegetal3.setFrame(728);
-    //     }else if(this.vegetal3.frame.name == 728){
-    //         this.vegetal3.setFrame(729);
-    //     } else if(this.vegetal3.frame.name == 729){
-    //         this.vegetal3.setFrame(730);
-    //     } else{
-    //         this.vegetal3.setFrame(731);
-
-    //     }
-
-
-    // }
-    // cresceVegetal4(){
-    //     if(this.vegetal4.frame.name == 32){
-    //         this.vegetal4.setFrame(800);
-    //     }else if(this.vegetal4.frame.name == 800){
-    //         this.vegetal4.setFrame(801);
-    //     } else if(this.vegetal4.frame.name == 801){
-    //         this.vegetal4.setFrame(802);
-    //     } else{
-    //         this.vegetal4.setFrame(803);
-    //     }
-
-    // }
-    // cresceVegetal5(){
-    //     if(this.vegetal5.frame.name == 32){
-    //         this.vegetal5.setFrame(752);
-    //     }else if(this.vegetal5.frame.name == 752){
-    //         this.vegetal5.setFrame(753);
-    //     } else if(this.vegetal5.frame.name == 753){
-    //         this.vegetal5.setFrame(754);
-    //     } else{
-    //         this.vegetal5.setFrame(755);
-
-    //     }
-
-
-    // }
-    // cresceVegetal6(){
-    //     if(this.vegetal6.frame.name == 32){
-    //         this.vegetal6.setFrame(800);
-    //     }else if(this.vegetal6.frame.name == 800){
-    //         this.vegetal6.setFrame(801);
-    //     } else if(this.vegetal6.frame.name == 801){
-    //         this.vegetal6.setFrame(802);
-    //     } else{
-    //         this.vegetal6.setFrame(803);
-    //     }
-
-    // }
-    // cresceVegetal7(){
-    //     if(this.vegetal7.frame.name == 32){
-    //         this.vegetal7.setFrame(728);
-    //     }else if(this.vegetal7.frame.name == 728){
-    //         this.vegetal7.setFrame(729);
-    //     } else if(this.vegetal7.frame.name == 729){
-    //         this.vegetal7.setFrame(730);
-    //     } else{
-    //         this.vegetal7.setFrame(731);
-
-    //     }
-
-    // }
-    // cresceVegetal8(){
-    //     if(this.vegetal8.frame.name == 32){
-    //         this.vegetal8.setFrame(800);
-    //     }else if(this.vegetal8.frame.name == 800){
-    //         this.vegetal8.setFrame(801);
-    //     } else if(this.vegetal8.frame.name == 801){
-    //         this.vegetal8.setFrame(802);
-    //     } else{
-    //         this.vegetal8.setFrame(803);
-    //     }
-
-    // }
-
-
-
-    // initAnimations() {
-    //     this.arvore1.anims.create({
-    //             key: 'balance0',
-    //             frames: this.arvore1.anims.generateFrameNumbers('arvore', { start: 24, end: 29 }),
-    //             frameRate: this
-    //                 .frameRate,
-    //             repeat: -1
-    //         });
-
-
-
-    //     this.anims.create({
-    //         key: 'balance1',
-    //         frames: this.anims.generateFrameNumbers('arvore', { start: 36, end: 47 }),
-    //         frameRate: this
-    //             .frameRate,
-    //         repeat: -1
-    //     });
-    // }
 }

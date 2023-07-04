@@ -14,9 +14,6 @@ export default class Lab extends Scene {
     /**@type {Player} */
     player;
 
-
-
-
     touch;
 
     /**@type {Phaser.Physics.Arcade.Group} */
@@ -32,7 +29,6 @@ export default class Lab extends Scene {
 
 
     isTouching = false;
-    // isTouchingVaca = false;
 
     isAction = false;
 
@@ -57,19 +53,7 @@ export default class Lab extends Scene {
             frameWidth: 48,
             frameHeight: 48
         })
-
-
-
-
-
-
     }
-
-
-    init() {
-
-    }
-
 
     create() {
         this.createMap();
@@ -237,20 +221,6 @@ export default class Lab extends Scene {
         //chama a funcao this.handleTouch toda vez que o this.touch entrar em contato com um objeto do this.groupObjects
         this.physics.add.overlap(this.touch, this.groupObjects, this.handleTouch, undefined, this);
     }
-
-
-
-    // handleVaca() {
-
-    //     if (this.vaca.body.touching.up || this.vaca.body.touching.down || this.vaca.body.touching.left || this.vaca.body.touching.right){
-    //         this.vaca.setFlipX(true);
-    //         this.vaca.setVelocity(this.vaca.body.velocity *-1);
-    //     }
-
-    //     }
-
-
-
 
     handleTouch(touch, object) {
 

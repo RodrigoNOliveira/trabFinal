@@ -26,22 +26,12 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
         this.setFrame(3);
         this.speed = 120;
         this.frameRate = 8;
-
-
-
-
         this.setOrigin(0.5, 0.5);
-
         this.body.setSize(12, 12);
         this.body.setOffset(10, 15);
         this.setVelocityX(0);
         this.initAnimations();
-
-
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
-
-
-
 
         if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
             this.play('stop', true);
@@ -58,7 +48,6 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
             callbackScope: this
         });
 
-        // this.deitarVaca();
     }
 
     update() {
@@ -69,11 +58,6 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
             }
 
         }
-
-
-        // this.acaoVaca();
-
-
     }
 
 
@@ -81,7 +65,6 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
         this.play('walk', true);
         this.isAction = true;
         const aleatorio = Math.floor(Math.random() * 3 + 1);
-        // console.log(aleatorio);
         switch (aleatorio) {
             case 1:
                 this.setFlipX(!this.flipX);
@@ -108,7 +91,6 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
 
         this.play('laying', true);
         this.isAction = true;
-        console.log(this.frame.name);
         if (this.frame.name == 16) {
             this.play('down', true);
             this.isAction = true;
@@ -122,7 +104,6 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(0);
         this.play('stop', true);
         this.isAction = true;
-        console.log(this.frame.name);
 
     }
 
@@ -131,7 +112,6 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
         if ((this.frame.name >= 32 && this.frame.name <= 35) || (this.frame.name >= 24 && this.frame.name <= 26)) {
             this.play('up', true);
             this.isAction = true;
-            console.log(this.frame.name);
             this.pararVaca();
         }
 
@@ -143,25 +123,19 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
     acaoVaca() {
 
         var aleatorio = Math.floor(Math.random() * 6 + 1);
-        console.log(aleatorio);
         switch (aleatorio) {
             case 1: //para andar
-                console.log("andando");
                 this.levantarVaca();
                 this.moveVaca();
                 break;
             case 2: //para deitar
-                console.log("deitando");
                 this.pararVaca();
                 this.deitarVaca();
                 break;
             case 3: //para dormir
-                console.log("dormindo");
                 this.pararVaca();
-                console.log(this.frame.name);
                 if (this.frame.name != 16 || this.frame.name != 24) {
                     this.deitarVaca();
-                    console.log(this.frame.name);
                 }
                 if (this.frame.name == 24) {
                     this.play('sleep', true);
@@ -169,12 +143,9 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
                 }
                 break;
             case 4: //para levantar
-                console.log("levantando");
-                console.log(this.frame.name);
                 this.levantarVaca();
                 break;
             case 5: //para cheirar
-                console.log("cheirando");
                 this.pararVaca();
                 this.levantarVaca();
                 this.play('sniffing', true);
@@ -183,7 +154,6 @@ export default class Vaca extends Phaser.Physics.Arcade.Sprite {
             case 6: //para mastigar
                 this.pararVaca();
                 this.levantarVaca();
-                console.log("mastigando");
                 this.play('eating', true);
                 this.isAction = true;
                 break;

@@ -58,7 +58,6 @@ export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
             callbackScope: this
         });
 
-        // this.deitarVaca();
     }
 
     update() {
@@ -69,11 +68,6 @@ export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
             }
 
         }
-
-
-        // this.acaoVaca();
-
-
     }
 
 
@@ -108,7 +102,7 @@ export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
 
         this.play('laying', true);
         this.isAction = true;
-        console.log(this.frame.name);
+
         if (this.frame.name == 80) {
             this.play('down', true);
             this.isAction = true;
@@ -122,7 +116,7 @@ export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(0);
         this.play('stop', true);
         this.isAction = true;
-        console.log(this.frame.name);
+
 
     }
 
@@ -131,7 +125,7 @@ export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
         if ((this.frame.name >= 96 && this.frame.name <= 99) || (this.frame.name >= 88 && this.frame.name <= 90)) {
             this.play('up', true);
             this.isAction = true;
-            console.log(this.frame.name);
+
             this.pararVaca();
         }
 
@@ -143,25 +137,22 @@ export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
     acaoVaca() {
 
         var aleatorio = Math.floor(Math.random() * 6 + 1);
-        console.log(aleatorio);
         switch (aleatorio) {
             case 1: //para andar
-                console.log("andando");
+
                 this.levantarVaca();
                 this.moveVaca();
                 break;
             case 2: //para deitar
-                console.log("deitando");
+
                 this.pararVaca();
                 this.deitarVaca();
                 break;
             case 3: //para dormir
-                console.log("dormindo");
+
                 this.pararVaca();
-                console.log(this.frame.name);
                 if (this.frame.name != 80 || this.frame.name != 88) {
                     this.deitarVaca();
-                    console.log(this.frame.name);
                 }
                 if (this.frame.name == 88) {
                     this.play('sleep', true);
@@ -169,12 +160,10 @@ export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
                 }
                 break;
             case 4: //para levantar
-                console.log("levantando");
-                console.log(this.frame.name);
                 this.levantarVaca();
                 break;
             case 5: //para cheirar
-                console.log("cheirando");
+
                 this.pararVaca();
                 this.levantarVaca();
                 this.play('sniffing', true);
@@ -183,7 +172,7 @@ export default class Vaca2 extends Phaser.Physics.Arcade.Sprite {
             case 6: //para mastigar
                 this.levantarVaca();
                 this.pararVaca();
-                console.log("mastigando");
+
                 this.play('eating', true);
                 this.isAction = true;
                 break;

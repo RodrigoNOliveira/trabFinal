@@ -4,8 +4,8 @@ import Fazenda from "./src/scenes/Fazenda";
 import Casa from "./src/scenes/Casa";
 
 const config = {
-    width: CONFIG.GAME_WIDTH*1.5,
-    height: CONFIG.GAME_HEIGHT*1.5,
+    width: CONFIG.GAME_WIDTH*1.25,
+    height: CONFIG.GAME_HEIGHT*1,
     type: AUTO,
     scene: [Fazenda, Casa],
     physics: {
